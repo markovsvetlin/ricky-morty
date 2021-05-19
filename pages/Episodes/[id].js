@@ -11,13 +11,27 @@ const CharsContainer = styled.div`
 
 const Title = styled.h1`
   text-align: center;
-  margin: 100px 0px;
+  margin: 50px 0px;
 `;
 
 const EpisodeInfo = styled.div`
   margin-top: 100px;
 `;
 
+const LoadMoreBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  padding: 10px;
+  border-radius: 20px;
+`;
+
+const LoadMoreBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+`;
 const Detail = (episodes) => {
   const [episode] = episodes.episodes;
   const [limit, setLimit] = useState(10);
@@ -41,7 +55,10 @@ const Detail = (episodes) => {
           ) : null;
         })}
       </CharsContainer>
-      <button onClick={loadMore}>load more</button>
+
+      <LoadMoreBtnContainer>
+        <LoadMoreBtn onClick={loadMore}>load more</LoadMoreBtn>
+      </LoadMoreBtnContainer>
     </EpisodeInfo>
   );
 };
