@@ -13,6 +13,9 @@ const NavButton = styled.button`
   border-radius: 20px;
   background-color: white;
   cursor: pointer;
+  &:hover {
+    background-color: purple;
+  }
 `;
 
 const Navbar = () => {

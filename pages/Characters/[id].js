@@ -1,20 +1,30 @@
 import { request, gql } from 'graphql-request';
+import { URL } from '../../comps/queries';
+import styled from 'styled-components';
+
+const CharContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 100px 400px 0px 400px;
+`;
 
 const Detail = (characters) => {
   const [character] = characters.characters;
-
+  console.log(character);
   return (
-    <div>
-      <h3>{character.name}</h3>
+    <CharContainer>
+      <h1>{character.name}</h1>
       <img src={character.image} alt="" />
-    </div>
+      <h3>{character.species}</h3>
+      <h3>{`Status: ${character.status}`}</h3>
+    </CharContainer>
   );
 };
 
 export default Detail;
 export async function getServerSidePaths() {
   const { data } = await request(
-    'https://rickandmortyapi.com/graphql/',
+    URL,
     gql`
       query {
         characters {
@@ -40,7 +50,7 @@ export async function getServerSidePaths() {
 export const getServerSideProps = async (context) => {
   const name = context.params.id;
   const data = await request(
-    'https://rickandmortyapi.com/graphql/',
+    URL,
     gql`
       query  {
         characters(filter:{name:"${name}"}) {

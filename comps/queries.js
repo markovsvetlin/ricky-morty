@@ -62,3 +62,5 @@ export const QUERY_CHARACTERS = gql`
     }
   }
 `;
+
+export const URL = 'https://rickandmortyapi.com/graphql/';
