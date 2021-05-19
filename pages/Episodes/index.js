@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, Link } from 'next/router';
 import { request, gql } from 'graphql-request';
 import styled from 'styled-components';
+import { QUERY_EPISODES } from '../../comps/queries';
 
 const EpisodesContainer = styled.div`
   display: grid;
@@ -17,6 +18,10 @@ const EpisodeContiner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  transition: all 0.7s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 const DetailButton = styled.button`
   font-size: 26px;
@@ -37,26 +42,7 @@ const Episodes = ({ episodes, info }) => {
   const fetchMore = async () => {
     const data = await request(
       'https://rickandmortyapi.com/graphql/',
-      gql`
-        query ($page: Int) {
-          episodes(page: $page) {
-            info {
-              pages
-              count
-              next
-              prev
-            }
-            results {
-              name
-              air_date
-              id
-              characters {
-                name
-              }
-            }
-          }
-        }
-      `,
+      QUERY_EPISODES,
       {
         page: currentPage,
       }
@@ -114,26 +100,7 @@ export default Episodes;
 export const getServerSideProps = async () => {
   const data = await request(
     'https://rickandmortyapi.com/graphql/',
-    gql`
-      query ($page: Int) {
-        episodes(page: $page) {
-          info {
-            pages
-            count
-            next
-            prev
-          }
-          results {
-            name
-            air_date
-            id
-            characters {
-              name
-            }
-          }
-        }
-      }
-    `,
+    QUERY_EPISODES,
     {
       page: 1,
     }

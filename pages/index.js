@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { request, gql } from 'graphql-request';
 import styled from 'styled-components';
+import { QUERY } from '../comps/queries';
 
 const CharsContainer = styled.div`
   display: grid;
@@ -17,7 +18,6 @@ const CharContainer = styled.div`
 `;
 export default function Home(results) {
   const charsArr = results.characters;
-  let randomNum = Math.floor(Math.random() * 10);
   return (
     <div>
       <Head>
@@ -45,34 +45,9 @@ export default function Home(results) {
 }
 
 export const getServerSideProps = async () => {
-  const data = await request(
-    'https://rickandmortyapi.com/graphql/',
-    gql`
-      query ($page: Int) {
-        characters(page: $page) {
-          info {
-            pages
-            count
-            next
-            prev
-          }
-          results {
-            name
-            id
-            image
-            status
-            species
-            location {
-              name
-            }
-          }
-        }
-      }
-    `,
-    {
-      page: 1,
-    }
-  );
+  const data = await request('https://rickandmortyapi.com/graphql/', QUERY, {
+    page: 1,
+  });
   return {
     props: { characters: data.characters.results, info: data.characters.info },
   };
