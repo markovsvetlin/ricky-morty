@@ -24,7 +24,10 @@ const DetailButton = styled.button`
   border: none;
   cursor: pointer;
 `;
-
+const Title = styled.h1`
+  text-align: center;
+  margin-top: 100px;
+`;
 const Episodes = ({ episodes, info }) => {
   const router = useRouter();
   const root = useRef();
@@ -88,6 +91,7 @@ const Episodes = ({ episodes, info }) => {
   }, [currentPage]);
   return (
     <>
+      <Title>EPISODES</Title>
       <EpisodesContainer>
         {episodesArr.map((episode, index) => (
           <EpisodeContiner key={index}>
