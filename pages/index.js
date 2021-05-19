@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { request, gql } from 'graphql-request';
+import { request } from 'graphql-request';
 import styled from 'styled-components';
-import { QUERY } from '../comps/queries';
+import { QUERY, URL } from '../comps/queries';
 
 const CharsContainer = styled.div`
   display: grid;
@@ -45,7 +45,7 @@ export default function Home(results) {
 }
 
 export const getServerSideProps = async () => {
-  const data = await request('https://rickandmortyapi.com/graphql/', QUERY, {
+  const data = await request(URL, QUERY, {
     page: 1,
   });
   return {

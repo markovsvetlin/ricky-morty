@@ -1,6 +1,7 @@
 import { request, gql } from 'graphql-request';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { URL } from '../../comps/queries';
 
 const CharsContainer = styled.div`
   display: grid;
@@ -66,7 +67,7 @@ const Detail = (episodes) => {
 export default Detail;
 export async function getServerSidePaths() {
   const { data } = await request(
-    'https://rickandmortyapi.com/graphql/',
+    URL,
     gql`
       query {
         episodes {
@@ -93,7 +94,7 @@ export async function getServerSidePaths() {
 export async function getServerSideProps(context) {
   const name = context.params.id;
   const data = await request(
-    'https://rickandmortyapi.com/graphql/',
+    URL,
     gql`
       query {
         episodes(filter:{name:"${name}"}) {

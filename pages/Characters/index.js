@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { request, gql } from 'graphql-request';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { QUERY_CHARACTERS } from '../../comps/queries';
+import { QUERY_CHARACTERS, URL } from '../../comps/queries';
 
 const CharsContainer = styled.div`
   display: grid;
@@ -37,13 +37,9 @@ const Characters = ({ characters, info }) => {
   console.log(info);
 
   const fetchMore = async () => {
-    const data = await request(
-      'https://rickandmortyapi.com/graphql/',
-      QUERY_CHARACTERS,
-      {
-        page: currentPage,
-      }
-    );
+    const data = await request(URL, QUERY_CHARACTERS, {
+      page: currentPage,
+    });
     console.log(data);
     setCharactersArr([...charactersArr, ...data.characters.results]);
 
@@ -97,13 +93,9 @@ const Characters = ({ characters, info }) => {
 
 export default Characters;
 export const getServerSideProps = async () => {
-  const data = await request(
-    'https://rickandmortyapi.com/graphql/',
-    QUERY_CHARACTERS,
-    {
-      page: 1,
-    }
-  );
+  const data = await request(URL, QUERY_CHARACTERS, {
+    page: 1,
+  });
   return {
     props: { characters: data.characters.results, info: data.characters.info },
   };

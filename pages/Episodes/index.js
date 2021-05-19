@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { useRouter, Link } from 'next/router';
-import { request, gql } from 'graphql-request';
+import { useRouter } from 'next/router';
+import { request } from 'graphql-request';
 import styled from 'styled-components';
-import { QUERY_EPISODES } from '../../comps/queries';
+import { QUERY_EPISODES, URL } from '../../comps/queries';
 
 const EpisodesContainer = styled.div`
   display: grid;
@@ -40,13 +40,9 @@ const Episodes = ({ episodes, info }) => {
   const [episodesArr, setEpisodesArr] = useState(episodes);
 
   const fetchMore = async () => {
-    const data = await request(
-      'https://rickandmortyapi.com/graphql/',
-      QUERY_EPISODES,
-      {
-        page: currentPage,
-      }
-    );
+    const data = await request(URL, QUERY_EPISODES, {
+      page: currentPage,
+    });
     console.log(data);
     setEpisodesArr([...episodesArr, ...data.episodes.results]);
 
@@ -98,13 +94,9 @@ const Episodes = ({ episodes, info }) => {
 };
 export default Episodes;
 export const getServerSideProps = async () => {
-  const data = await request(
-    'https://rickandmortyapi.com/graphql/',
-    QUERY_EPISODES,
-    {
-      page: 1,
-    }
-  );
+  const data = await request(URL, QUERY_EPISODES, {
+    page: 1,
+  });
   return {
     props: { episodes: data.episodes.results, info: data.episodes.info },
   };
