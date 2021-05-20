@@ -12,29 +12,22 @@ const CharsContainer = styled.div`
 `;
 
 const CharContainer = styled.div`
+  cursor: pointer;
   margin-bottom: 50px;
   text-align: center;
-  border: 1px solid black;
+  border: 2px solid black;
   padding-bottom: 20px;
   transition: all 0.7s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   &:hover {
     transform: scale(1.1);
   }
 `;
-
-const DetailButton = styled.button`
-  font-size: 26px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-`;
-
 const Characters = ({ characters, info }) => {
   const root = useRef();
   const [charactersArr, setCharactersArr] = useState(characters);
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
-  console.log(info);
 
   const fetchMore = async () => {
     const data = await request(URL, QUERY_CHARACTERS, {
@@ -42,10 +35,6 @@ const Characters = ({ characters, info }) => {
     });
     console.log(data);
     setCharactersArr([...charactersArr, ...data.characters.results]);
-
-    return {
-      data,
-    };
   };
 
   useEffect(() => {
@@ -72,21 +61,19 @@ const Characters = ({ characters, info }) => {
     <>
       <CharsContainer>
         {charactersArr.map((character, index) => (
-          <CharContainer>
+          <CharContainer
+            key={index}
+            onClick={() => router.push(`/Characters/${character.name}`)}
+          >
             <h2>{character.name}</h2>
             <img src={character.image} alt="bla" />
             <h4>{character.species}</h4>
             <h4>{`Status: ${character.status}`}</h4>
-            <DetailButton
-              onClick={() => router.push(`/Characters/${character.name}`)}
-            >
-              Details
-            </DetailButton>
           </CharContainer>
         ))}
       </CharsContainer>
 
-      <div ref={root}>sssss</div>
+      <div style={{ height: 10 }} ref={root}></div>
     </>
   );
 };

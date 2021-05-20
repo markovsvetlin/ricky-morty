@@ -1,4 +1,4 @@
-import { useRouter, Link } from 'next/router';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 const NavbarContainer = styled.div`
@@ -10,6 +10,7 @@ const NavButton = styled.button`
   margin: 20px;
   font-size: 26px;
   padding: 10px;
+  border: none;
   border-radius: 20px;
   background-color: white;
   cursor: pointer;

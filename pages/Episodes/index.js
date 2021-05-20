@@ -12,22 +12,18 @@ const EpisodesContainer = styled.div`
 `;
 
 const EpisodeContiner = styled.div`
-  border: 1px solid black;
+  cursor: pointer;
+  border: 2px solid black;
   padding: 20px;
   margin: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   transition: all 0.7s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   &:hover {
     transform: scale(1.1);
   }
-`;
-const DetailButton = styled.button`
-  font-size: 26px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
 `;
 const Title = styled.h1`
   text-align: center;
@@ -45,10 +41,6 @@ const Episodes = ({ episodes, info }) => {
     });
     console.log(data);
     setEpisodesArr([...episodesArr, ...data.episodes.results]);
-
-    return {
-      data,
-    };
   };
 
   useEffect(() => {
@@ -74,17 +66,14 @@ const Episodes = ({ episodes, info }) => {
   return (
     <>
       <Title>EPISODES</Title>
-      <EpisodesContainer>
+      <EpisodesContainer
+        onClick={() => router.push(`/Episodes/${episode.name}`)}
+      >
         {episodesArr.map((episode, index) => (
           <EpisodeContiner key={index}>
             <h1>{episode.name}</h1>
             <h3>{`Air Date: ${episode.air_date}`}</h3>
             <h3>{`Characters involved: ${episode.characters.length}`}</h3>
-            <DetailButton
-              onClick={() => router.push(`/Episodes/${episode.name}`)}
-            >
-              Detail
-            </DetailButton>
           </EpisodeContiner>
         ))}
       </EpisodesContainer>

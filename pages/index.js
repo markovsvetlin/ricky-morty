@@ -14,7 +14,8 @@ const CharsContainer = styled.div`
 const CharContainer = styled.div`
   margin-bottom: 50px;
   text-align: center;
-  border: 1px solid black;
+  border: 2px solid black;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 export default function Home(results) {
   const charsArr = results.characters;
@@ -31,8 +32,8 @@ export default function Home(results) {
             .slice(0, 20)
             .sort(() => Math.random() - Math.random())
             .slice(0, 10)
-            .map((char, index, array) => (
-              <CharContainer>
+            .map((char, index) => (
+              <CharContainer key={index}>
                 <h2>{char.name}</h2>
                 <img src={char.image} alt="" />
                 <h4>{`Status: ${char.status}`}</h4>
